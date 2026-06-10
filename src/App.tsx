@@ -502,10 +502,10 @@ export default function App() {
           >
             {/* ⚡ ইমপোর্ট করা লোগো ভেরিয়েবল এখানে ব্যবহার করা হলো */}
             <img 
-              src={bgiLogoImg} 
-              alt="BGI_LOGO" 
-              className="w-10 h-10 object-contain group-hover:scale-105 transition-transform" 
-            />
+  src={bgiLogoImg} 
+  alt="BGI_LOGO" 
+  className="w-10 h-10 object-cover rounded-full border border-white/10 shadow-md group-hover:scale-105 transition-transform" 
+/>
             
             <span className="text-xl tracking-[0.18em] font-serif font-bold text-white group-hover:text-brand-gold transition-colors">
               BGI_COMMUNITY
