@@ -1,0 +1,6 @@
+{
+  "name": "BGI Community Ticket Booking",
+  "description": "Online ticket booking platform for BGI Community events with aesthetic video backgrounds and glassmorphism UI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
