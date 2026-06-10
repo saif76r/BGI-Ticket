@@ -25,6 +25,7 @@ import myBackgroundVideo from './bg-video.mp4';
 import bkashLogoImg from './assets/bkash.png';
 import rocketLogoImg from './assets/rocket.png';
 import nagadLogoImg from './assets/nagad.png';
+import bgiLogoImg from './assets/bgi-logo.png'; // 👈 সঠিক ফোল্ডার থেকে লোগো ইমপোর্ট করা হলো
 
 
 const bkashLogo: string = bkashLogoImg;
@@ -499,11 +500,11 @@ export default function App() {
             onClick={() => { setActiveTab('home'); playSynthesizerSound('click'); }} 
             className="flex items-center space-x-3 cursor-pointer group"
           >
-            {/* গোল করা লোগো (Rounded Logo) */}
+            {/* ⚡ ইমপোর্ট করা লোগো ভেরিয়েবল এখানে ব্যবহার করা হলো */}
             <img 
-              src="/bgi-logo.png" 
+              src={bgiLogoImg} 
               alt="BGI_LOGO" 
-              className="w-10 h-10 object-cover rounded-full border border-white/10 shadow-md group-hover:scale-105 transition-transform" 
+              className="w-10 h-10 object-contain group-hover:scale-105 transition-transform" 
             />
             
             <span className="text-xl tracking-[0.18em] font-serif font-bold text-white group-hover:text-brand-gold transition-colors">
@@ -682,9 +683,19 @@ export default function App() {
                       </div>
                     </div>
 
-                    {/* Cancel Spot বাটনটি এখান থেকে পুরোপুরি রিমুভ করা হয়েছে */}
                     <div className="pt-4 border-t border-white/5 flex items-center justify-between">
                       <div className="text-xl font-serif text-brand-gold font-bold">৳{b.totalAmount}</div>
+                      <button 
+                        onClick={() => {
+                          if (confirm("Are you sure you want to release this ticket?")) {
+                            setBookings(prev => prev.filter(bk => bk.ticketId !== b.ticketId));
+                            showToast("Ticket reservation released.");
+                          }
+                        }}
+                        className="text-xs text-red-400 hover:underline"
+                      >
+                        Cancel Spot
+                      </button>
                     </div>
                   </div>
                 ))}
