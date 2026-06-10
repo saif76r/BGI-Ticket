@@ -25,7 +25,7 @@ import myBackgroundVideo from './bg-video.mp4';
 import bkashLogoImg from './assets/bkash.png';
 import rocketLogoImg from './assets/rocket.png';
 import nagadLogoImg from './assets/nagad.png';
-import bgiLogoImg from './assets/bgi-logo.png'; // 👈 সঠিক ফোল্ডার থেকে লোগো ইমপোর্ট করা হলো
+import bgiLogoImg from './assets/bgi-logo.png'; 
 
 
 const bkashLogo: string = bkashLogoImg;
@@ -500,12 +500,11 @@ export default function App() {
             onClick={() => { setActiveTab('home'); playSynthesizerSound('click'); }} 
             className="flex items-center space-x-3 cursor-pointer group"
           >
-            {/* ⚡ ইমপোর্ট করা লোগো ভেরিয়েবল এখানে ব্যবহার করা হলো */}
             <img 
-  src={bgiLogoImg} 
-  alt="BGI_LOGO" 
-  className="w-10 h-10 object-cover rounded-full border border-white/10 shadow-md group-hover:scale-105 transition-transform" 
-/>
+              src={bgiLogoImg} 
+              alt="BGI_LOGO" 
+              className="w-10 h-10 object-cover rounded-full border border-white/10 shadow-md group-hover:scale-105 transition-transform" 
+            />
             
             <span className="text-xl tracking-[0.18em] font-serif font-bold text-white group-hover:text-brand-gold transition-colors">
               BGI_COMMUNITY
@@ -657,48 +656,47 @@ export default function App() {
               </div>
             ) : (
               <div className="grid md:grid-cols-2 gap-6">
-                {bookings.map(b => (
-                  <div key={b.ticketId} className="glass-panel rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between border-l-4 border-l-brand-gold">
-                    <div className="flex items-start justify-between pb-4 border-b border-white/5">
-                      <div>
-                        <h4 className="text-lg font-serif font-bold text-white">{b.event.title}</h4>
+                {bookings
+                  .filter((value, index, self) => self.findIndex(v => v.ticketId === value.ticketId) === index)
+                  .map(b => (
+                    <div key={b.ticketId} className="glass-panel rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between border-l-4 border-l-brand-gold">
+                      <div className="flex items-start justify-between pb-4 border-b border-white/5">
+                        <div>
+                          <h4 className="text-lg font-serif font-bold text-white">{b.event.title}</h4>
+                        </div>
+                        <span className="text-[10px] font-mono uppercase bg-brand-gold/10 text-brand-gold px-2 py-0.5 rounded-md">
+                          {b.tier.name}
+                        </span>
                       </div>
-                      <span className="text-[10px] font-mono uppercase bg-brand-gold/10 text-brand-gold px-2 py-0.5 rounded-md">
-                        {b.tier.name}
-                      </span>
-                    </div>
 
-                    <div className="py-4 space-y-2 text-xs">
-                      <div className="flex justify-between">
-                        <span className="text-slate-400">Attendee:</span>
-                        <span className="text-slate-200 font-medium">{b.name}</span>
+                      <div className="py-4 space-y-2 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-slate-400">Attendee:</span>
+                          <span className="text-slate-200 font-medium">{b.name}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-400">Quantity:</span>
+                          <span className="text-slate-200 font-medium">{b.quantity} Ticket(s)</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-400">Paid Via:</span>
+                          <span className="text-brand-gold font-medium">{b.paymentMethod} ({b.senderNumber})</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-400">TrxID:</span>
+                          <span className="text-slate-200 font-mono select-all">{b.transactionId}</span>
+                        </div>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-400">Quantity:</span>
-                        <span className="text-slate-200 font-medium">{b.quantity} Ticket(s)</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-400">Paid Via:</span>
-                        <span className="text-brand-gold font-medium">{b.paymentMethod} ({b.senderNumber})</span>
-                      </div>
-                    </div>
 
-                    <div className="pt-4 border-t border-white/5 flex items-center justify-between">
-                      <div className="text-xl font-serif text-brand-gold font-bold">৳{b.totalAmount}</div>
-                      <button 
-                        onClick={() => {
-                          if (confirm("Are you sure you want to release this ticket?")) {
-                            setBookings(prev => prev.filter(bk => bk.ticketId !== b.ticketId));
-                            showToast("Ticket reservation released.");
-                          }
-                        }}
-                        className="text-xs text-red-400 hover:underline"
-                      >
-                        Cancel Spot
-                      </button>
+                      <div className="pt-4 border-t border-white/5 flex items-center justify-between">
+                        <div className="text-xl font-serif text-brand-gold font-bold">৳{b.totalAmount}</div>
+                        {/* ⚡ Cancel Spot বাটন সম্পূর্ণভাবে রিমোভ করা হয়েছে */}
+                        <span className="text-[10px] font-mono uppercase text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded">
+                          Confirmed Pass
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             )}
           </div>
@@ -803,7 +801,6 @@ export default function App() {
                     <p className="text-sm font-bold text-brand-gold pt-1">Total Amount: ৳{selectedTier.price * ticketQty}</p>
                   </div>
 
-                  {/* 📱 3 MFS Payment Buttons */}
                   <div className="grid grid-cols-3 gap-4">
                     {/* bKash Button */}
                     <button 
@@ -866,7 +863,6 @@ export default function App() {
                     </button>
                   </div>
 
-                  {/* ⚡ Fixed Send Money Instructions (Dynamically updates based on selection) */}
                   <div className="p-4 rounded-xl border border-amber-500/20 bg-amber-500/5 animate-fade-in text-xs font-sans space-y-1">
                     <span className="text-[10px] font-mono tracking-widest text-brand-gold uppercase block">
                       Payment Instruction
@@ -879,7 +875,6 @@ export default function App() {
                     </p>
                   </div>
 
-                  {/* Dynamic MFS Account Number Input */}
                   <div className="space-y-2 pt-1 animate-fade-in">
                     <label className="text-xs font-mono tracking-wider uppercase text-slate-400 block">
                       ENTER YOUR {paymentMethod.toUpperCase()} NUMBER
@@ -893,7 +888,6 @@ export default function App() {
                     />
                   </div>
 
-                  {/* Transaction ID Input */}
                   <div className="space-y-2 pt-1">
                     <label className="text-xs font-mono tracking-wider uppercase text-slate-400 block">
                       ENTER {paymentMethod.toUpperCase()} TRANSACTION ID (TRXID)
