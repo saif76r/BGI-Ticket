@@ -421,7 +421,13 @@ export default function App() {
       bookedAt: new Date().toLocaleString()
     };
 
-    setBookings(prev => [newBooking, ...prev]);
+    // ⚡ ফিক্সড: Strict Mode-এর কারণে ডুপ্লিকেট টিকিট স্টেট পুশ প্রতিরোধ মেকানিজম
+    setBookings(prev => {
+      const isDuplicate = prev.some(b => b.transactionId === newBooking.transactionId || b.ticketId === newBooking.ticketId);
+      if (isDuplicate) return prev;
+      return [newBooking, ...prev];
+    });
+
     try {
       await addDoc(collection(db, "bookings"), {
         ticketId,
@@ -434,7 +440,10 @@ export default function App() {
         totalAmount,
         bookedAt: new Date().toISOString()
       });
-    } catch (e) { console.error(e); }
+    } catch (e) { 
+      console.error(e); 
+    }
+
     setLastFinishedBooking(newBooking);
     setStep(4); 
     triggerCelebration();
@@ -690,7 +699,6 @@ export default function App() {
 
                       <div className="pt-4 border-t border-white/5 flex items-center justify-between">
                         <div className="text-xl font-serif text-brand-gold font-bold">৳{b.totalAmount}</div>
-                        {/* ⚡ Cancel Spot বাটন সম্পূর্ণভাবে রিমোভ করা হয়েছে */}
                         <span className="text-[10px] font-mono uppercase text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded">
                           Confirmed Pass
                         </span>
