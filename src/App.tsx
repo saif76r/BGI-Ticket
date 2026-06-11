@@ -21,12 +21,10 @@ import {
 import confetti from 'canvas-confetti';
 import myBackgroundVideo from './bg-video.mp4'; 
 
-
 import bkashLogoImg from './assets/bkash.png';
 import rocketLogoImg from './assets/rocket.png';
 import nagadLogoImg from './assets/nagad.png';
 import bgiLogoImg from './assets/bgi-logo.png'; 
-
 
 const bkashLogo: string = bkashLogoImg;
 const rocketLogo: string = rocketLogoImg;
@@ -421,7 +419,6 @@ export default function App() {
       bookedAt: new Date().toLocaleString()
     };
 
-    // ⚡ ফিক্সড: Strict Mode-এর কারণে ডুপ্লিকেট টিকিট স্টেট পুশ প্রতিরোধ মেকানিজম
     setBookings(prev => {
       const isDuplicate = prev.some(b => b.transactionId === newBooking.transactionId || b.ticketId === newBooking.ticketId);
       if (isDuplicate) return prev;
@@ -503,24 +500,24 @@ export default function App() {
       </div>
 
       {/* HEADER NAVIGATION */}
-      <header className="sticky top-0 z-40 bg-transparent backdrop-blur-md border-b border-white/5 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-transparent backdrop-blur-md border-b border-white/5 px-4 sm:px-6 py-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 flex-nowrap">
           <div 
             onClick={() => { setActiveTab('home'); playSynthesizerSound('click'); }} 
-            className="flex items-center space-x-3 cursor-pointer group"
+            className="flex items-center space-x-2 sm:space-x-3 cursor-pointer group min-w-0 flex-shrink"
           >
             <img 
               src={bgiLogoImg} 
               alt="BGI_LOGO" 
-              className="w-10 h-10 object-cover rounded-full border border-white/10 shadow-md group-hover:scale-105 transition-transform" 
+              className="w-8 h-8 sm:w-10 sm:h-10 object-cover rounded-full border border-white/10 shadow-md group-hover:scale-105 transition-transform flex-shrink-0" 
             />
             
-            <span className="text-xl tracking-[0.18em] font-serif font-bold text-white group-hover:text-brand-gold transition-colors">
+            <span className="text-base sm:text-xl tracking-wider sm:tracking-[0.18em] font-serif font-bold text-white group-hover:text-brand-gold transition-colors truncate">
               BGI_COMMUNITY
             </span>
           </div>
 
-          <nav className="hidden md:flex items-center space-x-10 text-xs tracking-[0.25em] uppercase text-slate-300 font-serif">
+          <nav className="hidden md:flex items-center space-x-10 text-xs tracking-[0.25em] uppercase text-slate-300 font-serif flex-shrink-0">
             <button 
               onClick={() => { setActiveTab('home'); playSynthesizerSound('click'); }}
               className={`hover:text-brand-gold transition-colors relative py-1 duration-300 ${activeTab === 'home' || activeTab === 'booking-wizard' ? 'text-brand-gold font-bold' : ''}`}
@@ -550,10 +547,10 @@ export default function App() {
             </button>
           </nav>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
             <button 
               onClick={() => { startBookingWithPreset(EVENTS[0]); }}
-              className="glass-pill px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-widest text-white hover:text-brand-gold transition-all duration-300 active:scale-95"
+              className="glass-pill px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider sm:tracking-widest text-white hover:text-brand-gold transition-all duration-300 active:scale-95 whitespace-nowrap"
             >
               Book Ticket
             </button>
