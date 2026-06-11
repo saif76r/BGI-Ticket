@@ -284,6 +284,18 @@ export default function App() {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const fontAudioCtxRef = useRef<AudioContext | null>(null);
 
+  // Inject Google Fonts dynamic link directly inside component context for Noticia Text font support
+  useEffect(() => {
+    const linkId = 'google-font-noticia';
+    if (!document.getElementById(linkId)) {
+      const link = document.createElement('link');
+      link.id = linkId;
+      link.rel = 'stylesheet';
+      link.href = 'https://fonts.googleapis.com/css2?family=Noticia+Text:ital,wght@0,400;0,700;1,400;1,700&display=swap';
+      document.head.appendChild(link);
+    }
+  }, []);
+
   useEffect(() => {
     localStorage.setItem('bgi_bookings', JSON.stringify(bookings));
   }, [bookings]);
@@ -512,12 +524,18 @@ export default function App() {
               className="w-8 h-8 sm:w-10 sm:h-10 object-cover rounded-full border border-white/10 shadow-md group-hover:scale-105 transition-transform flex-shrink-0" 
             />
             
-            <span className="text-base sm:text-xl tracking-wider sm:tracking-[0.18em] font-serif font-bold text-white group-hover:text-brand-gold transition-colors truncate">
+            <span 
+              style={{ fontFamily: "'Noticia Text', serif" }}
+              className="text-base sm:text-xl tracking-wider sm:tracking-[0.12em] font-bold text-white group-hover:text-brand-gold transition-colors truncate"
+            >
               BGI_COMMUNITY
             </span>
           </div>
 
-          <nav className="hidden md:flex items-center space-x-10 text-xs tracking-[0.25em] uppercase text-slate-300 font-serif flex-shrink-0">
+          <nav 
+            style={{ fontFamily: "'Noticia Text', serif" }}
+            className="hidden md:flex items-center space-x-10 text-xs tracking-[0.2em] uppercase text-slate-300 flex-shrink-0"
+          >
             <button 
               onClick={() => { setActiveTab('home'); playSynthesizerSound('click'); }}
               className={`hover:text-brand-gold transition-colors relative py-1 duration-300 ${activeTab === 'home' || activeTab === 'booking-wizard' ? 'text-brand-gold font-bold' : ''}`}
@@ -576,8 +594,12 @@ export default function App() {
         {activeTab === 'home' && (
           <div className="w-full flex flex-col items-center py-10 md:py-20 text-center select-none animate-fade-in">
             <div className="space-y-6 max-w-3xl mb-12 mt-4">
-              <h1 className="text-4xl sm:text-6xl md:text-8xl font-serif font-light text-white tracking-normal leading-[1.1]">
-                Where <span className="italic font-normal font-serif">dreams</span> rise <span className="block italic sm:inline">through the</span> <span className="font-semibold text-brand-gold">silence.</span>
+              {/* Noticia Text font style applied on the main requested core text block */}
+              <h1 
+                style={{ fontFamily: "'Noticia Text', serif" }}
+                className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-white tracking-normal leading-[1.15]"
+              >
+                Where <span className="italic font-normal">dreams</span> rise <span className="block italic sm:inline">through the</span> <span className="font-bold text-brand-gold">silence.</span>
               </h1>
               <p className="text-slate-300 text-sm sm:text-lg md:text-xl font-sans font-light tracking-wide max-w-xl mx-auto leading-relaxed md:pt-4">
                 Get ready for a next-level experience! We're hosting our biggest gathering yet. Tickets are on sale now—don't miss out, grab yours today!
@@ -590,7 +612,10 @@ export default function App() {
                 className="group relative px-10 py-4 rounded-full bg-slate-950/40 border border-brand-gold hover:bg-brand-gold hover:text-slate-950 overflow-hidden transition-all duration-500 active:scale-95 shadow-[0_0_25px_rgba(212,175,55,0.15)] hover:shadow-[0_0_40px_rgba(212,175,55,0.45)]"
               >
                 <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-[25deg] -translate-x-[150%] group-hover:translate-x-[250%] transition-transform duration-1000 ease-out" />
-                <span className="relative text-brand-gold text-xs sm:text-sm tracking-[0.25em] font-serif uppercase font-bold group-hover:text-slate-950 transition-colors flex items-center justify-center space-x-2.5">
+                <span 
+                  style={{ fontFamily: "'Noticia Text', serif" }}
+                  className="relative text-brand-gold text-xs sm:text-sm tracking-[0.2em] uppercase font-bold group-hover:text-slate-950 transition-colors flex items-center justify-center space-x-2.5"
+                >
                   <Sparkles className="w-4 h-4 text-brand-gold group-hover:text-slate-950 transition-colors shrink-0 animate-pulse" />
                   <span>RESERVE YOUR PASS</span>
                   <ArrowRight className="w-3.5 h-3.5 translate-x-0 group-hover:translate-x-1.5 transition-transform" />
@@ -618,7 +643,12 @@ export default function App() {
               <span>Back home</span>
             </button>
 
-            <h2 className="text-2xl md:text-4xl font-serif text-white mb-2">Connect With Us</h2>
+            <h2 
+              style={{ fontFamily: "'Noticia Text', serif" }} 
+              className="text-2xl md:text-4xl text-white mb-2"
+            >
+              Connect With Us
+            </h2>
             <form onSubmit={(e) => { e.preventDefault(); showToast("Message delivered safely to the BGI Organizers!"); playSynthesizerSound('success'); }} className="space-y-4 font-sans text-left">
               <div>
                 <label className="text-[10px] font-mono tracking-widest uppercase text-slate-400 block mb-1">Full Name</label>
@@ -645,7 +675,12 @@ export default function App() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
               <div>
                 <span className="text-[10px] uppercase font-mono tracking-widest text-brand-gold">COMMUNITY PORTAL</span>
-                <h2 className="text-3xl md:text-5xl font-serif text-white">Your Reserved Tickets</h2>
+                <h2 
+                  style={{ fontFamily: "'Noticia Text', serif" }} 
+                  className="text-3xl md:text-5xl text-white"
+                >
+                  Your Reserved Tickets
+                </h2>
               </div>
               <button 
                 onClick={() => { startBookingWithPreset(EVENTS[0]); }}
@@ -658,7 +693,12 @@ export default function App() {
             {bookings.length === 0 ? (
               <div className="glass-panel p-16 rounded-3xl text-center flex flex-col items-center justify-center space-y-6">
                 <Ticket className="w-12 h-12 text-slate-500 animate-pulse" />
-                <p className="text-xl font-serif text-slate-300">No active reservations found</p>
+                <p 
+                  style={{ fontFamily: "'Noticia Text', serif" }} 
+                  className="text-xl text-slate-300"
+                >
+                  No active reservations found
+                </p>
               </div>
             ) : (
               <div className="grid md:grid-cols-2 gap-6">
@@ -668,7 +708,12 @@ export default function App() {
                     <div key={b.ticketId} className="glass-panel rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between border-l-4 border-l-brand-gold">
                       <div className="flex items-start justify-between pb-4 border-b border-white/5">
                         <div>
-                          <h4 className="text-lg font-serif font-bold text-white">{b.event.title}</h4>
+                          <h4 
+                            style={{ fontFamily: "'Noticia Text', serif" }} 
+                            className="text-lg font-bold text-white"
+                          >
+                            {b.event.title}
+                          </h4>
                         </div>
                         <span className="text-[10px] font-mono uppercase bg-brand-gold/10 text-brand-gold px-2 py-0.5 rounded-md">
                           {b.tier.name}
@@ -695,7 +740,12 @@ export default function App() {
                       </div>
 
                       <div className="pt-4 border-t border-white/5 flex items-center justify-between">
-                        <div className="text-xl font-serif text-brand-gold font-bold">৳{b.totalAmount}</div>
+                        <div 
+                          style={{ fontFamily: "'Noticia Text', serif" }} 
+                          className="text-xl text-brand-gold font-bold"
+                        >
+                          ৳{b.totalAmount}
+                        </div>
                         <span className="text-[10px] font-mono uppercase text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded">
                           Confirmed Pass
                         </span>
@@ -714,7 +764,10 @@ export default function App() {
               <span className="text-[10px] tracking-[0.25em] uppercase font-mono text-slate-400 block mb-1">
                 BGI Community Secure Gateway
               </span>
-              <h2 className="text-3xl md:text-5xl font-serif text-white tracking-wide">
+              <h2 
+                style={{ fontFamily: "'Noticia Text', serif" }} 
+                className="text-3xl md:text-5xl text-white tracking-wide"
+              >
                 Ticket Reservation
               </h2>
             </div>
@@ -737,14 +790,24 @@ export default function App() {
               {/* Step 1: Event & Details */}
               {step === 1 && (
                 <div className="space-y-6 text-left animate-fade-in">
-                  <h3 className="text-xl font-serif text-white">Select Event & Details</h3>
+                  <h3 
+                    style={{ fontFamily: "'Noticia Text', serif" }} 
+                    className="text-xl text-white"
+                  >
+                    Select Event & Details
+                  </h3>
                   <div className="grid gap-3">
                     {EVENTS.map(ev => (
                       <div
                         key={ev.id}
                         className="p-4 rounded-xl border bg-brand-gold/10 border-brand-gold"
                       >
-                        <h4 className="text-sm font-semibold text-white">{ev.title}</h4>
+                        <h4 
+                          style={{ fontFamily: "'Noticia Text', serif" }} 
+                          className="text-sm font-semibold text-white"
+                        >
+                          {ev.title}
+                        </h4>
                         <p className="text-xs text-slate-400 mt-1">{ev.desc}</p>
                         <div className="flex gap-4 mt-3 text-[11px] text-brand-gold font-mono">
                           <span>📅 {ev.date}</span>
@@ -765,7 +828,12 @@ export default function App() {
               {/* Step 2: Tier & Quantity Selection */}
               {step === 2 && (
                 <div className="space-y-6 text-left animate-fade-in">
-                  <h3 className="text-xl font-serif text-white">Select Ticket Tier</h3>
+                  <h3 
+                    style={{ fontFamily: "'Noticia Text', serif" }} 
+                    className="text-xl text-white"
+                  >
+                    Select Ticket Tier
+                  </h3>
                   {TICKET_TIERS.map(tier => (
                     <div
                       key={tier.id}
@@ -776,7 +844,12 @@ export default function App() {
                     >
                       <div className="flex justify-between">
                         <div>
-                          <h4 className="text-lg font-serif text-white">{tier.name}</h4>
+                          <h4 
+                            style={{ fontFamily: "'Noticia Text', serif" }} 
+                            className="text-lg text-white"
+                          >
+                            {tier.name}
+                          </h4>
                           <p className="text-xs text-slate-400 mt-1">{tier.perks}</p>
                         </div>
                         <span className="text-xl text-brand-gold font-bold">৳{tier.price}</span>
@@ -798,7 +871,12 @@ export default function App() {
               {/* Step 3: Secure Confirmation & Checkout */}
               {step === 3 && (
                 <div className="space-y-6 text-left animate-fade-in">
-                  <h3 className="text-xl font-serif text-white">Secure Confirmation</h3>
+                  <h3 
+                    style={{ fontFamily: "'Noticia Text', serif" }} 
+                    className="text-xl text-white"
+                  >
+                    Secure Confirmation
+                  </h3>
                   <div className="p-4 bg-white/3 border border-white/5 rounded-xl space-y-2 text-xs">
                     <p><span className="text-slate-400">Event:</span> {selectedEvent.title}</p>
                     <p><span className="text-slate-400">Category:</span> {selectedTier.name}</p>
@@ -914,7 +992,12 @@ export default function App() {
                   <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center mx-auto mb-4">
                     <Check className="w-8 h-8 text-emerald-400" />
                   </div>
-                  <h3 className="text-2xl font-serif text-white">Reservation Confirmed</h3>
+                  <h3 
+                    style={{ fontFamily: "'Noticia Text', serif" }} 
+                    className="text-2xl text-white"
+                  >
+                    Reservation Confirmed
+                  </h3>
                   <div className="mt-4 p-4 bg-slate-950/80 rounded-xl max-w-sm mx-auto text-left space-y-2 text-xs font-mono">
                     <p className="text-center text-brand-gold text-sm font-bold">{lastFinishedBooking.ticketId}</p>
                     <p><span className="text-slate-500">Name:</span> {lastFinishedBooking.name}</p>
@@ -952,7 +1035,12 @@ export default function App() {
       <footer className="z-10 py-8 px-6 bg-transparent border-t border-white/5 text-center sm:text-left mt-auto">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-slate-400">
-            © 2026 <span className="text-brand-gold font-semibold font-serif">BGI_COMMUNITY</span>. All rights secured.
+            © 2026 <span 
+              style={{ fontFamily: "'Noticia Text', serif" }} 
+              className="text-brand-gold font-semibold"
+            >
+              BGI_COMMUNITY
+            </span>. All rights secured.
           </p>
         </div>
       </footer>
